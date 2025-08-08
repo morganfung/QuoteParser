@@ -1,0 +1,24 @@
+{
+    "quantity": "6",
+    "totalPrice": "1778.50",
+    "lineItems": [
+        {
+            "description": "MOUNT BLOCK SAW EXTEND ACTUATOR",
+            "quantity": "2",
+            "unitPrice": "387.50",
+            "cost": "775.00"
+        },
+        {
+            "description": "MOUNT BLOCK SAW EXTEND ACTUATOR",
+            "quantity": "3",
+            "unitPrice": "324.50",
+            "cost": "973.50"
+        },
+        {
+            "description": "FREIGHT SHIPPING",
+            "quantity": "1",
+            "unitPrice": "30.00",
+            "cost": "30.00"
+        }
+    ]
+}

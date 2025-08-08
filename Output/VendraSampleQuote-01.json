@@ -1,0 +1,36 @@
+{
+    "quantity": "21",
+    "totalPrice": "14287.40",
+    "lineItems": [
+        {
+            "description": "19_5-basebalancer-05: Clear PC Material, Machine and De-burr",
+            "quantity": "5",
+            "unitPrice": "1,524.28",
+            "cost": "7,621.40"
+        },
+        {
+            "description": "19_5-coverbalancer-05: Clear PC Material, Machine and De-burr",
+            "quantity": "5",
+            "unitPrice": "1,464.00",
+            "cost": "7,320.00"
+        },
+        {
+            "description": "19_5-limiter-Ol: Steel Material, Machine and De-burr",
+            "quantity": "5",
+            "unitPrice": "80.00",
+            "cost": "400.00"
+        },
+        {
+            "description": "Threaded_Plug: Polypropylene Material, Machine and De-burr",
+            "quantity": "5",
+            "unitPrice": "160.00",
+            "cost": "800.00"
+        },
+        {
+            "description": "COD",
+            "quantity": "1",
+            "unitPrice": "-1,854.00",
+            "cost": "-1,854.00"
+        }
+    ]
+}

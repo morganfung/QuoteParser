@@ -1,0 +1,18 @@
+{
+    "quantity": "12",
+    "totalPrice": "2880.00",
+    "lineItems": [
+        {
+            "description": "ESTOP BODY-GEN2 4",
+            "quantity": "6",
+            "unitPrice": "395.00",
+            "cost": "2,370.00"
+        },
+        {
+            "description": "ESTOP_REAR-GEN2_ 4",
+            "quantity": "6",
+            "unitPrice": "85.00",
+            "cost": "510.00"
+        }
+    ]
+}

@@ -1,5 +1,6 @@
 import cv2
 import easyocr
+import json
 import matplotlib.pyplot as plt
 import pymupdf
 import re
@@ -32,9 +33,10 @@ def within_category(coords: list, range: tuple):
     return (range[0] > min_x and range[1] < max_x)
 
 
-pdf_path = "Input/VendraSampleQuote-03.pdf"
-output_name = pdf_path[6:]
-output_name = output_name[:-4]
+print('\n\n')
+pdf = input("Place PDF in Input/ folder and enter filename (including .pdf extension):\t")
+
+pdf_path = f"Input/{pdf}"
 
 description_set = ["description"]
 quantity_set = ["moq", "quantity", "qty"]
@@ -46,16 +48,24 @@ x_shift = 200
 padding = 10
 scaling_fac = 1/40
 
-doc = pymupdf.open(pdf_path)
-zoom = 4
-mat = pymupdf.Matrix(zoom, zoom)
-count = 0
-result = []
+while True:
+    try:
+        pdf_path = f"Input/{pdf}"
+        doc = pymupdf.open(pdf_path)
+        zoom = 4
+        mat = pymupdf.Matrix(zoom, zoom)
+        count = 0
+        result = []
+        break
+    except:
+        pdf = input("PDF could not be found, please try again (including .pdf extension):\t")
 
+output_name = pdf_path[6:]
+output_name = output_name[:-4]
 
 # Uses OCR (easyocr) to read from pdf
 # Reads entire page and sets var result to a list of the words and the coordinates or rectangle points
-output_src = f"Output/{output_name}.png"
+output_src = f"Intermediate/{output_name}.png"
 page = doc.load_page(0)
 pix = page.get_pixmap(matrix=mat)
 pix.save(output_src)
@@ -110,7 +120,7 @@ for detected in result:
     if contains_desc and contains_qty and contains_price and contains_cost:
         break
 
-result = reader.readtext(output_src, paragraph=True, ycenter_ths=1, width_ths=0.7, add_margin=0.0255 * desc_y_delta * scaling_fac, y_ths=(0.20 * desc_y_delta * scaling_fac))
+result = reader.readtext(output_src, paragraph=True, ycenter_ths=1, width_ths=0.7, add_margin=(0.0255*desc_y_delta*scaling_fac), y_ths=(0.20*desc_y_delta*scaling_fac))
 
 
 for _, text in result:
@@ -187,24 +197,64 @@ while len(costs) > max_len:
     costs.pop()
 
 
-# Print to console, testing
-print('\n\n\n')
-for item in descriptions:
-    print(item)
-print('\n\n\n')
-for item in quantities:
-    print(item)
-print('\n\n\n')
-for item in prices:
-    print(item)
-print('\n\n\n')
-for item in costs:
-    print(item)
+## Print to console, testing
+# print('\n\n\n')
+# for item in descriptions:
+#     print(item)
+# print('\n\n\n')
+# for item in quantities:
+#     print(item)
+# print('\n\n\n')
+# for item in prices:
+#     print(item)
+# print('\n\n\n')
+# for item in costs:
+#     print(item)
+
+# print(descriptions)
+# print(quantities)
+# print(prices)
+# print(costs)
             
-# Display a picture of how OCR is generating text boxes.
-img = cv2.imread(output_src)
-draw_bounding_boxes(img, result)
-plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGBA))
-plt.show()
+# # Display a picture of how OCR is generating text boxes.
+# img = cv2.imread(output_src)
+# draw_bounding_boxes(img, result)
+# plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGBA))
+# plt.show()
+
+json_items = []
+quantity = 0
+total = 0
+
+for i in range(len(descriptions)):
+    item = json.dumps({
+        "description": descriptions[i],
+        "quantity": quantities[i],
+        "unitPrice": prices[i],
+        "cost": costs[i]
+    })
+
+    json_items.append(item)
+
+    quantities[i] = quantities[i].replace(",", "").strip()
+    costs[i] = costs[i].replace(",", "").strip()
+
+    quantity += float(quantities[i])
+    total += float(costs[i])
+
+build_json = '{' + f'"quantity": "{int(quantity)}", ' + f'"totalPrice": "{("%.2f" % float(total))}", ' + '"lineItems": ['
+
+for s in json_items:
+    build_json = build_json + s + ', '
+build_json = build_json[:-2] + ']}'
+
+data = json.loads(build_json)
+# print(data)
+
+json_str = json.dumps(data, indent=4)
+with open(f"Output/{output_name}.json", "w") as f:
+    f.write(json_str)
+
+# print("raw json string:\n", build_json)
 
 doc.close()
