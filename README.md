@@ -6,8 +6,8 @@ Extracts **line items** (description, quantity, unit price, cost) from a one-pag
 
 ## (Briefly) What this script does:
 - Renders the 1st page of your PDF to a png
-- Runs OCR to find table **headers** like “Description”, “Qty”, “Unit Price”, “Amount/Total”
-- Scans **down each column** to collect line items
+- Runs OCR to find table headers like “Description”, “Qty”, “Unit Price”, “Amount/Total”
+- Scans down each column to collect line items
 - Normalizes numbers and totals them
 - Saves to `Output/<filename>.json`
 
