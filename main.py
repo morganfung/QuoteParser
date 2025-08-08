@@ -123,6 +123,8 @@ for detected in result:
 result = reader.readtext(output_src, paragraph=True, ycenter_ths=1, width_ths=0.7, add_margin=(0.0255*desc_y_delta*scaling_fac), y_ths=(0.20*desc_y_delta*scaling_fac))
 
 
+# Checks if there is a dollar sign in the PDF, if so I note it for removal from the beginning of each price
+# I wrote this outside of the previous for loop, for some reason it breaks some of the logic later in the script
 for _, text in result:
     if "$" in text:
         contains_dollar = True
