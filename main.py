@@ -34,9 +34,9 @@ def within_category(coords: list, range: tuple):
 
 
 print('\n\n')
-pdf = input("Place PDF in Input/ folder and enter filename (including .pdf extension):\t")
+pdf = input("Place PDF in Upload folder and enter filename (including .pdf extension):\t")
 
-pdf_path = f"Input/{pdf}"
+pdf_path = f"Uplaod/{pdf}"
 
 description_set = ["description"]
 quantity_set = ["moq", "quantity", "qty"]
@@ -50,7 +50,7 @@ scaling_fac = 1/40
 
 while True:
     try:
-        pdf_path = f"Input/{pdf}"
+        pdf_path = f"Upload/{pdf}"
         doc = pymupdf.open(pdf_path)
         zoom = 4
         mat = pymupdf.Matrix(zoom, zoom)
