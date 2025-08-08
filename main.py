@@ -84,38 +84,41 @@ for detected in result:
     coord, word = detected
     word = word.lower()
 
-    for w in description_set:
-        if w in word:
-            contains_desc = True
-            desc_x, desc_y = find_midpt(detected)
-            desc_x_range = (int(coord[0][0]), int(coord[1][0]))
-            desc_y_delta = find_y_delta(detected)
-            break
+    if not contains_desc:
+        for w in description_set:
+            if w in word:
+                contains_desc = True
+                desc_x, desc_y = find_midpt(detected)
+                desc_x_range = (int(coord[0][0]), int(coord[1][0]))
+                desc_y_delta = find_y_delta(detected)
+                break
 
-    for w in quantity_set:
-        if w in word:
-            contains_qty = True
-            qty_x, qty_y = find_midpt(detected)
-            qty_x_range = (int(coord[0][0]), int(coord[1][0]))
-            qty_y_delta = find_y_delta(detected)
-            break
+    if not contains_qty:
+        for w in quantity_set:
+            if w in word:
+                contains_qty = True
+                qty_x, qty_y = find_midpt(detected)
+                qty_x_range = (int(coord[0][0]), int(coord[1][0]))
+                qty_y_delta = find_y_delta(detected)
+                break
 
+    if not contains_price:
+        for w in price_set:
+            if w in word:
+                contains_price = True
+                price_x, price_y = find_midpt(detected)
+                price_x_range = (int(coord[0][0]), int(coord[1][0]))
+                price_y_delta = find_y_delta(detected)
+                break
 
-    for w in price_set:
-        if w in word:
-            contains_price = True
-            price_x, price_y = find_midpt(detected)
-            price_x_range = (int(coord[0][0]), int(coord[1][0]))
-            price_y_delta = find_y_delta(detected)
-            break
-
-    for w in cost_set:
-        if w in word:
-            contains_cost = True
-            cost_x, cost_y = find_midpt(detected)
-            cost_x_range = (int(coord[0][0]), int(coord[1][0]))
-            cost_y_delta = find_y_delta(detected)
-            break
+    if not contains_cost:
+        for w in cost_set:
+            if w in word:
+                contains_cost = True
+                cost_x, cost_y = find_midpt(detected)
+                cost_x_range = (int(coord[0][0]), int(coord[1][0]))
+                cost_y_delta = find_y_delta(detected)
+                break
     
     if contains_desc and contains_qty and contains_price and contains_cost:
         break
